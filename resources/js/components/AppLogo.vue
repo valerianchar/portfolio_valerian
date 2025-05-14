@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { BookmarkIcon } from '@heroicons/vue/24/solid'; /* PartiallyEnd: #3632/scriptSetup.vue */
 import { BookmarkIcon } from '@heroicons/vue/24/solid';
 </script>
 
