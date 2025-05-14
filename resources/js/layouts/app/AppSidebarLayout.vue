@@ -7,18 +7,17 @@ import type { BreadcrumbItemType, NavItem } from '@/types';
 
 interface Props {
     breadcrumbs?: BreadcrumbItemType[];
-    mainNavItems?: NavItem[]
+    mainNavItems?: NavItem[];
 }
 
-const props = withDefaults(defineProps<Props>(), {
+withDefaults(defineProps<Props>(), {
     breadcrumbs: () => [],
 });
-
 </script>
 
 <template>
     <AppShell variant="sidebar">
-        <AppSidebar :mainNavItems="mainNavItems"/>
+        <AppSidebar :mainNavItems="mainNavItems" />
         <AppContent variant="sidebar">
             <AppSidebarHeader :breadcrumbs="breadcrumbs" />
             <slot />

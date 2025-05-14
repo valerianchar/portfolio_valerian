@@ -2,7 +2,7 @@
 import AppLayout from '@/layouts/AppLayout.vue';
 import { type BreadcrumbItem } from '@/types';
 import { Head } from '@inertiajs/vue3';
-import { Phone, Mail, MapPin, Dot, Diamond, Linkedin, Github } from 'lucide-vue-next';
+import { Diamond, Dot, Github, Linkedin, Mail, MapPin, Phone } from 'lucide-vue-next';
 import { ref } from 'vue';
 
 const copiedEmail = ref(false);
@@ -25,24 +25,16 @@ const competences: string[] = [
     'C# - 5 ans',
     'Laravel - 1 an',
     'HTML - 5 ans',
-    'TailwindCSS - 2 ans'
+    'TailwindCSS - 2 ans',
 ];
-const qualites: string[] = [
-    'Créativité',
-    'Capacité d\'adaptation',
-    'Excellentes compétences',
-    'relationnelles',
-    'Esprit d\'équipe',
-    'Motivé'
-];
+const qualites: string[] = ['Créativité', "Capacité d'adaptation", 'Excellentes compétences', 'relationnelles', "Esprit d'équipe", 'Motivé'];
 const stacksProject: string[] = [
     'Rédaction du cahier des charges',
     'Suivi Agile (Kanban)',
     'Développement front et back',
     'Mise en place d’un pipeline CI/CD avec Docker',
-    'Mise en production sur un VPS (Ubuntu)'
+    'Mise en production sur un VPS (Ubuntu)',
 ];
-
 
 const reseaux = [
     {
@@ -54,38 +46,34 @@ const reseaux = [
         name: 'GitHub',
         url: 'https://github.com/valerianchar',
         icon: Github,
-    }
+    },
 ];
-
 
 const onEmailClick = async () => {
     try {
         await navigator.clipboard.writeText('valerian.charrier@gmail.com');
         copiedEmail.value = true;
-        setTimeout(() => copiedEmail.value = false, 2000);
-
+        setTimeout(() => (copiedEmail.value = false), 2000);
     } catch (err) {
-        console.error("Erreur lors de la copie :", err);
+        console.error('Erreur lors de la copie :', err);
     }
 };
 const onPhoneClick = async () => {
     try {
         await navigator.clipboard.writeText('0628947120');
         copiedPhone.value = true;
-        setTimeout(() => copiedPhone.value = false, 2000);
-
+        setTimeout(() => (copiedPhone.value = false), 2000);
     } catch (err) {
-        console.error("Erreur lors de la copie :", err);
+        console.error('Erreur lors de la copie :', err);
     }
 };
 const onAddressClick = async () => {
     try {
         await navigator.clipboard.writeText('1 Rue Père Louis de Galard, 69009 Lyon');
         copiedAddress.value = true;
-        setTimeout(() => copiedAddress.value = false, 2000);
-
+        setTimeout(() => (copiedAddress.value = false), 2000);
     } catch (err) {
-        console.error("Erreur lors de la copie :", err);
+        console.error('Erreur lors de la copie :', err);
     }
 };
 </script>
@@ -109,15 +97,14 @@ const onAddressClick = async () => {
             </div>
             <div class="flex gap-4">
                 <div
-                    class="relative border-sidebar-border/70 flex-wrap dark:border-sidebar-border flex flex-col gap-8 overflow-hidden rounded-xl border p-4"
+                    class="border-sidebar-border/70 dark:border-sidebar-border relative flex flex-col flex-wrap gap-8 overflow-hidden rounded-xl border p-4"
                 >
-                    <div class="flex flex-col  gap-4">
+                    <div class="flex flex-col gap-4">
                         <div class="text-2xl font-bold">Contact</div>
                         <div class="flex flex-col gap-4">
-
                             <div class="relative">
-                                <span v-if="copiedPhone" class="ml-10 absolute -top-4  text-green-400 text-xs">copied</span>
-                                <div class="flex gap-2 items-center hover:text-blue-500 cursor-pointer text-nowrap" @click="onPhoneClick()">
+                                <span v-if="copiedPhone" class="absolute -top-4 ml-10 text-xs text-green-400">copied</span>
+                                <div class="flex cursor-pointer items-center gap-2 text-nowrap hover:text-blue-500" @click="onPhoneClick()">
                                     <Phone />
                                     <div class="h-6 w-0.5 bg-white" />
                                     <p>06-28-94-71-20</p>
@@ -125,19 +112,17 @@ const onAddressClick = async () => {
                             </div>
 
                             <div class="relative">
-                                <span v-if="copiedEmail" class="ml-10 absolute -top-4  text-green-400 text-xs">copied</span>
-                                <div class="flex gap-2 items-center hover:text-blue-500 cursor-pointer text-nowrap" @click="onEmailClick()">
-                                    <Mail/>
+                                <span v-if="copiedEmail" class="absolute -top-4 ml-10 text-xs text-green-400">copied</span>
+                                <div class="flex cursor-pointer items-center gap-2 text-nowrap hover:text-blue-500" @click="onEmailClick()">
+                                    <Mail />
                                     <div class="h-6 w-0.5 bg-white" />
-                                    <p class="text-sm">
-                                        valerian.charrier@gmail.com
-                                    </p>
+                                    <p class="text-sm">valerian.charrier@gmail.com</p>
                                 </div>
                             </div>
 
                             <div class="relative">
-                                <span v-if="copiedAddress" class="ml-10 absolute -top-4 text-green-400 text-xs">copied</span>
-                                <div class="flex gap-2 items-center hover:text-blue-500 cursor-pointer text-nowrap" @click="onAddressClick()">
+                                <span v-if="copiedAddress" class="absolute -top-4 ml-10 text-xs text-green-400">copied</span>
+                                <div class="flex cursor-pointer items-center gap-2 text-nowrap hover:text-blue-500" @click="onAddressClick()">
                                     <MapPin />
                                     <div class="h-6 w-0.5 bg-white" />
                                     <div>
@@ -152,8 +137,8 @@ const onAddressClick = async () => {
                         <div class="text-2xl font-bold">Compétences</div>
                         <div class="flex flex-col gap-2" v-for="(competence, index) in competences" :key="index">
                             <div class="flex gap-2">
-                                <Dot/>
-                                {{competence}}
+                                <Dot />
+                                {{ competence }}
                             </div>
                         </div>
                     </div>
@@ -161,8 +146,8 @@ const onAddressClick = async () => {
                         <div class="text-2xl font-bold">Qualités</div>
                         <div class="flex flex-col gap-2" v-for="(qualite, index) in qualites" :key="index">
                             <div class="flex gap-2">
-                                <Dot/>
-                                {{qualite}}
+                                <Dot />
+                                {{ qualite }}
                             </div>
                         </div>
                     </div>
@@ -174,54 +159,42 @@ const onAddressClick = async () => {
                                 :key="reseau.name"
                                 :href="reseau.url"
                                 target="_blank"
-                                class="text-blue-400 ml-4 hover:underline flex items-center gap-2"
+                                class="ml-4 flex items-center gap-2 text-blue-400 hover:underline"
                             >
-                                <component :is="reseau.icon" class="w-4 h-4" />
+                                <component :is="reseau.icon" class="h-4 w-4" />
                                 {{ reseau.name }}
                             </a>
                         </div>
                     </div>
                 </div>
-                <div
-                    class="relative flex-1 border-sidebar-border/70 dark:border-sidebar-border justify-center overflow-hidden rounded-xl border p-4"
-                >
+                <div class="border-sidebar-border/70 dark:border-sidebar-border relative flex-1 justify-center overflow-hidden rounded-xl border p-4">
                     <div class="flex flex-col gap-6">
                         <div class="flex gap-4">
-                            <div class="pt-13 pb-2 flex flex-col justify-center items-center">
-                                <div class="w-0.5 bg-white h-full"/>
-                                <Diamond class="w-4 h-4"/>
+                            <div class="flex flex-col items-center justify-center pt-13 pb-2">
+                                <div class="h-full w-0.5 bg-white" />
+                                <Diamond class="h-4 w-4" />
                             </div>
                             <div class="flex flex-col gap-4">
-                                <div class="text-xl font-bold">
-                                    EXPÉRIENCE PROFESSIONNELLE
-                                </div>
+                                <div class="text-xl font-bold">EXPÉRIENCE PROFESSIONNELLE</div>
                                 <div class="flex flex-col gap-3">
-                                    <div  class="flex flex-col gap-1">
-                                        <div class="font-bold">
-                                            Développeur Full Stack
-                                        </div>
+                                    <div class="flex flex-col gap-1">
+                                        <div class="font-bold">Développeur Full Stack</div>
                                         <div>
-                                            <div class="italic">Optimis - Lyon (69) | Sept. 2022 - Aujourd'hui </div>
+                                            <div class="italic">Optimis - Lyon (69) | Sept. 2022 - Aujourd'hui</div>
                                             <div>
-                                                Lors de ce poste, j’ai réalisé de nombreuses tâches allant du
-                                                développement mobile au développement web. Les
-                                                technologies que j’ai utilisées sont principalement : C#,
-                                                Xamarin dans mes premières années, puis laravel et vuejs par
-                                                la suite.
+                                                Lors de ce poste, j’ai réalisé de nombreuses tâches allant du développement mobile au développement
+                                                web. Les technologies que j’ai utilisées sont principalement : C#, Xamarin dans mes premières années,
+                                                puis laravel et vuejs par la suite.
                                             </div>
                                         </div>
                                     </div>
                                     <div class="flex flex-col gap-1">
-                                        <div class="font-bold">
-                                            Technicien Système et Réseau
-                                        </div>
+                                        <div class="font-bold">Technicien Système et Réseau</div>
                                         <div>
-                                            <div class="italic">AssaAbloy - Dunière (43) | Oct. 2020 - Juil. 2022 </div>
+                                            <div class="italic">AssaAbloy - Dunière (43) | Oct. 2020 - Juil. 2022</div>
                                             <div>
-                                                Lors de ce poste, j’ai effectué de nombreuses tâches réseau
-                                                telles que : la gestion de ticketing, l’aide à l’utilisateur, gestion
-                                                basique de serveurs virtuels, développement d’application
-                                                Windev.
+                                                Lors de ce poste, j’ai effectué de nombreuses tâches réseau telles que : la gestion de ticketing,
+                                                l’aide à l’utilisateur, gestion basique de serveurs virtuels, développement d’application Windev.
                                             </div>
                                         </div>
                                     </div>
@@ -229,33 +202,23 @@ const onAddressClick = async () => {
                             </div>
                         </div>
                         <div class="flex gap-4">
-                            <div class="pt-13 pb-2 flex flex-col justify-center items-center">
-                                <div class="w-0.5 bg-white h-full"/>
-                                <Diamond class="w-4 h-4"/>
+                            <div class="flex flex-col items-center justify-center pt-13 pb-2">
+                                <div class="h-full w-0.5 bg-white" />
+                                <Diamond class="h-4 w-4" />
                             </div>
                             <div class="flex flex-col gap-4">
-                                <div class="text-xl font-bold">
-                                    PROJETS
-                                </div>
+                                <div class="text-xl font-bold">PROJETS</div>
                                 <div class="flex flex-col gap-3">
-                                    <div  class="flex flex-col gap-1">
-                                        <div class="font-bold">
-                                            Projet personnel – Application de partage de spot et de parcours.
-                                        </div>
+                                    <div class="flex flex-col gap-1">
+                                        <div class="font-bold">Projet personnel – Application de partage de spot et de parcours.</div>
                                         <div>
-                                            <div class="italic">2025 – Projet de Master (En cours de développement) </div>
+                                            <div class="italic">2025 – Projet de Master (En cours de développement)</div>
                                             <div>
-                                                Développement d’une application full stack (Laravel, Vue.js,
-                                                Inertia) en autonomie, incluant :
-                                                <div
-                                                    class="flex"
-                                                    v-for="(stackProject, index) in stacksProject"
-                                                    :key="index"
-                                                >
-                                                    <Dot/>
-                                                    {{stackProject}}
+                                                Développement d’une application full stack (Laravel, Vue.js, Inertia) en autonomie, incluant :
+                                                <div class="flex" v-for="(stackProject, index) in stacksProject" :key="index">
+                                                    <Dot />
+                                                    {{ stackProject }}
                                                 </div>
-
                                             </div>
                                         </div>
                                     </div>
@@ -263,39 +226,29 @@ const onAddressClick = async () => {
                             </div>
                         </div>
                         <div class="flex gap-4">
-                            <div class="pt-13 pb-2 flex flex-col justify-center items-center">
-                                <div class="w-0.5 bg-white h-full"/>
-                                <Diamond class="w-4 h-4"/>
+                            <div class="flex flex-col items-center justify-center pt-13 pb-2">
+                                <div class="h-full w-0.5 bg-white" />
+                                <Diamond class="h-4 w-4" />
                             </div>
                             <div class="flex flex-col gap-4">
-                                <div class="text-xl font-bold">
-                                    FORMATIONS
-                                </div>
+                                <div class="text-xl font-bold">FORMATIONS</div>
                                 <div class="flex flex-col gap-3">
-                                    <div  class="flex flex-col gap-1">
-                                        <div class="font-bold">
-                                            Master en Informatique, Titre RNCP Expert en développement logiciel (RNCP 39583)
-                                        </div>
+                                    <div class="flex flex-col gap-1">
+                                        <div class="font-bold">Master en Informatique, Titre RNCP Expert en développement logiciel (RNCP 39583)</div>
                                         <div class="italic">Ynov | Lyon | 2023-Aujourd’hui</div>
                                     </div>
-                                    <div  class="flex flex-col gap-1">
-                                        <div class="font-bold">
-                                            Licence en Concepteur développeur d’application
-                                        </div>
+                                    <div class="flex flex-col gap-1">
+                                        <div class="font-bold">Licence en Concepteur développeur d’application</div>
                                         <div class="italic">Doranco | Lyon | 2022-2023</div>
                                     </div>
-                                    <div  class="flex flex-col gap-1">
-                                        <div class="font-bold">
-                                            BTS SIO (Système informatique aux organisation)
-                                        </div>
+                                    <div class="flex flex-col gap-1">
+                                        <div class="font-bold">BTS SIO (Système informatique aux organisation)</div>
                                         <div class="italic">CFAI LOIRE | Saint-Etienne | 2020-2022</div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-
-
                 </div>
             </div>
         </div>

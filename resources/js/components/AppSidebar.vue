@@ -2,17 +2,16 @@
 import NavFooter from '@/components/NavFooter.vue';
 import NavMain from '@/components/NavMain.vue';
 import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from '@/components/ui/sidebar';
-import { type BreadcrumbItemType, type NavItem } from '@/types';
+import { type NavItem } from '@/types';
 import { Link } from '@inertiajs/vue3';
-import {  GithubIcon } from 'lucide-vue-next';
+import { GithubIcon } from 'lucide-vue-next';
 import AppLogo from './AppLogo.vue';
 
-
 interface Props {
-    mainNavItems?: NavItem[]
+    mainNavItems?: NavItem[];
 }
 
-withDefaults( defineProps<Props>(), {
+withDefaults(defineProps<Props>(), {
     mainNavItems: () => [
         {
             title: 'Dashboard',
@@ -21,7 +20,6 @@ withDefaults( defineProps<Props>(), {
         },
     ],
 });
-
 
 const footerNavItems: NavItem[] = [
     {
