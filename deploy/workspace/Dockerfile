@@ -14,7 +14,7 @@ RUN sed -i 's~"@php artisan package:discover~"echo prevent @php artisan package:
 	composer install --no-interaction --no-dev --optimize-autoloader && \
 	rm -rf /root/.cache/composer
 
-COPY ./app /src
+COPY . /src
 
 # set requirement privileges and build front
 RUN chown -R 1000:1000 storage && \
