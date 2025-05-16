@@ -82,11 +82,11 @@ const onAddressClick = async () => {
     <Head title="Portfolio" />
     <AppLayout :breadcrumbs="breadcrumbs">
         <div class="flex h-full flex-1 flex-col gap-4 rounded-xl p-4">
-            <div class="grid gap-4 md:grid-cols-3">
-                <div class="dark:border-sidebar-border relative justify-items-center overflow-hidden md:col-span-1">
-                    <img src="@/assets/images/moi.jpg" alt="VC" class="h-60 w-60 rounded-full object-cover" />
+            <div class="flex gap-4 flex-col md:flex-row">
+                <div class="dark:border-sidebar-border relative justify-items-center overflow-hidden">
+                    <img src="@/assets/images/moi.jpg" alt="VC" class="h-65 w-65 rounded-full object-cover" />
                 </div>
-                <div class="border-sidebar-border/70 dark:border-sidebar-border justify-center overflow-hidden rounded-xl border p-4 md:col-span-2">
+                <div class="border-sidebar-border/70 dark:border-sidebar-border justify-center overflow-hidden rounded-xl border p-4 flex-1">
                     <div class="text-2xl italic">VALÉRIAN CHARRIER</div>
                     <div class="text-3xl font-bold">DÉVELOPPEUR WEB FULL STACK</div>
                     Jeune diplômé en informatique, actuellement en Master à Ynov Lyon, je suis passionné par le développement full stack. Fort de
@@ -95,7 +95,7 @@ const onAddressClick = async () => {
                     techniques stimulants.
                 </div>
             </div>
-            <div class="flex gap-4">
+            <div class="flex flex-col md:flex-row gap-4">
                 <div
                     class="border-sidebar-border/70 dark:border-sidebar-border relative flex flex-col flex-wrap gap-8 overflow-hidden rounded-xl border p-4"
                 >

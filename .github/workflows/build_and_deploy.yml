@@ -1,0 +1,111 @@
+name: build_and_deploy.yml
+on:
+  workflow_run:
+    workflows: [ "ci" ]
+    types:
+      - completed
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    env:
+      REGISTRY: registry.valerianchar.fr
+      REGISTRY_USER: admin
+      CURRENT_VERSION: latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Log in to Docker registries
+        run: |
+          echo "${{ secrets.DOCKER_HUB_PASSWORD }}" | docker login -u valerianc --password-stdin
+          echo "${{ secrets.REGISTRY_PASSWORD }}" | docker login $REGISTRY -u $REGISTRY_USER --password-stdin
+
+      - name: Compute Variables
+        run: |
+          LARADOCK_HASH=bd6d2795
+          LARADOCK_HASH=${LARADOCK_HASH:0:8}
+          echo "LARADOCK_HASH=$LARADOCK_HASH" >> $GITHUB_ENV
+
+          echo "LARADOCK_WORKSPACE_IMAGE=$REGISTRY/portfolio/laradock/workspace:$LARADOCK_HASH" >> $GITHUB_ENV
+          echo "LARADOCK_PHP_WORKER_IMAGE=$REGISTRY/portfolio/laradock/php-worker:$LARADOCK_HASH" >> $GITHUB_ENV
+          echo "LARADOCK_PHP_FPM_IMAGE=$REGISTRY/portfolio/laradock/php-fpm:$LARADOCK_HASH" >> $GITHUB_ENV
+          echo "LARADOCK_NGINX_IMAGE=$REGISTRY/portfolio/laradock/nginx:$LARADOCK_HASH" >> $GITHUB_ENV
+
+          echo "WORKSPACE_IMAGE=$REGISTRY/portfolio/workspace:latest" >> $GITHUB_ENV
+          echo "PHP_WORKER_IMAGE=$REGISTRY/portfolio/php-worker:latest" >> $GITHUB_ENV
+          echo "PHP_FPM_IMAGE=$REGISTRY/portfolio/php-fpm:latest" >> $GITHUB_ENV
+          echo "NGINX_IMAGE=$REGISTRY/portfolio/nginx:latest" >> $GITHUB_ENV
+
+      - name: Build and Push Docker Images
+        run: |
+          docker build -t $WORKSPACE_IMAGE -f deploy/workspace/Dockerfile \
+            --build-arg LARADOCK_WORKSPACE=${LARADOCK_WORKSPACE_IMAGE} \
+            --build-arg SWAGGER_TAG=latest .
+
+          docker build -t $PHP_WORKER_IMAGE -f deploy/php-worker/Dockerfile \
+            --build-arg LARADOCK_PHP_WORKER=${LARADOCK_PHP_WORKER_IMAGE} .
+
+          docker build -t $NGINX_IMAGE -f deploy/nginx/Dockerfile \
+            --build-arg LARADOCK_NGINX=${LARADOCK_NGINX_IMAGE} .
+
+          docker pull ${LARADOCK_PHP_FPM_IMAGE}
+          docker tag ${LARADOCK_PHP_FPM_IMAGE} ${PHP_FPM_IMAGE}
+
+          echo "Pushing images..."
+          docker push $WORKSPACE_IMAGE
+          docker push $PHP_WORKER_IMAGE
+          docker push $NGINX_IMAGE
+          docker push $PHP_FPM_IMAGE
+
+
+#  deploy:
+#    name: Deploy to VPS
+#    runs-on: ubuntu-latest
+#    if: github.ref == 'refs/heads/main'
+#
+#    steps:
+#      - name: Checkout repository
+#        uses: actions/checkout@v4
+#
+#      - name: Add SSH key and known hosts
+#        run: |
+#          mkdir -p ~/.ssh
+#          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+#          chmod 600 ~/.ssh/id_rsa
+#          ssh-keyscan -H ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts
+#
+#      - name: Deploy to VPS
+#        run: |
+#          ssh -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} << 'EOF'
+#          set -e
+#          echo "Vérification de Docker et Docker Compose..."
+#
+#            if ! command -v docker &> /dev/null; then
+#              echo "Installation de Docker..."
+#              curl -fsSL https://get.docker.com/ | sh
+#              sudo usermod -aG docker $USER
+#            fi
+#
+#            if ! docker compose version &> /dev/null; then
+#              echo "Installation de Docker Compose..."
+#              sudo curl -L "https://github.com/docker/compose/releases/latest/download/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+#              sudo chmod +x /usr/local/bin/docker-compose
+#            fi
+#
+#            echo "Mise à jour et redémarrage du conteneur Laravel..."
+#            cd /home/ubuntu/Beekeeper
+#            docker compose pull
+#            docker compose up -d --force-recreate beekeeper-api queue-worker nginx-api redis
+#
+#            echo "Déploiement terminé. Liste des conteneurs actifs :"
+#            docker ps
+#            EOF
