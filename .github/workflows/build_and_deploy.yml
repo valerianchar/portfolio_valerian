@@ -47,6 +47,11 @@ jobs:
 
       - name: Build and Push Docker Images
         run: |
+          echo "LARADOCK_WORKSPACE_IMAGE=$LARADOCK_WORKSPACE_IMAGE"
+          echo "WORKSPACE_IMAGE=$WORKSPACE_IMAGE"
+          echo "PHP_FPM_IMAGE=$PHP_FPM_IMAGE"
+          echo "CURRENT_VERSION=$CURRENT_VERSION"
+
           docker build -t $WORKSPACE_IMAGE -f deploy/workspace/Dockerfile \
             --build-arg LARADOCK_WORKSPACE=${LARADOCK_WORKSPACE_IMAGE} \
             --build-arg SWAGGER_TAG=latest .
