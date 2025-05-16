@@ -47,7 +47,6 @@ jobs:
 
       - name: Build and Push Docker Images
         run: |
-
           docker build -t $WORKSPACE_IMAGE -f deploy/workspace/Dockerfile \
             --build-arg LARADOCK_WORKSPACE=${LARADOCK_WORKSPACE_IMAGE} .
 
