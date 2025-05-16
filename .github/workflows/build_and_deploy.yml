@@ -50,6 +50,8 @@ jobs:
           docker build -t $WORKSPACE_IMAGE -f deploy/workspace/Dockerfile \
             --build-arg LARADOCK_WORKSPACE=${LARADOCK_WORKSPACE_IMAGE} .
 
+          ls -la
+
           docker build -t $PHP_WORKER_IMAGE -f deploy/php-worker/Dockerfile \
             --build-arg LARADOCK_PHP_WORKER=${LARADOCK_PHP_WORKER_IMAGE} .
 
