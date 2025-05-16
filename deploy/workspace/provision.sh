@@ -2,18 +2,16 @@
 
 set -xe
 
-# TODO faire une commande artisan qui wait la bdd et redis
+wait_for_service(){
+  until nc -vz $1 $2 > /dev/null; do
+    >&2 echo "$3 is unavailable - sleeping"
+    sleep 2
+  done
+  >&2 echo "$2 is up"
+}
 
-#wait_for_service(){
-#  until nc -vz $1 $2 > /dev/null; do
-#    >&2 echo "$3 is unavailable - sleeping"
-#    sleep 2
-#  done
-#  >&2 echo "$2 is up"
-#}
-#
-## Wait MYSQL
-#wait_for_service "${DB_HOST}" "${DB_PORT}" "Mysql"
+# Wait MYSQL
+wait_for_service "${DB_HOST}" "${DB_PORT}" "Mysql"
 #
 ## Wait Redis
 #wait_for_service "${REDIS_HOST}" "${REDIS_PORT}" "Redis"
