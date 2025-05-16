@@ -5,7 +5,7 @@ FROM $LARADOCK_WORKSPACE AS builder
 WORKDIR /src
 
 # Prepare composer
-COPY ./app/composer.json ./app/composer.lock /src/
+COPY ./composer.json ./composer.lock /src/
 
 # set requirement privileges and install packages
 RUN sed -i 's~"@php artisan package:discover~"echo prevent @php artisan package:discover~g' /src/composer.json && \
