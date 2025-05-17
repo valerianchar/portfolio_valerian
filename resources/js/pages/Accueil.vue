@@ -62,7 +62,7 @@ onMounted(async () => {
                 <!-- Bloc image ou illustration -->
                 <div class="flex items-center justify-center">
                     <!-- Tu peux remplacer l'image ci-dessous -->
-                    <img src="@/assets/images/moi.jpg" alt="Photo de Valérian" class="w-full rounded-full object-cover" />
+                    <img src="/assets/images/moi.jpg" alt="Photo de Valérian" class="w-full rounded-full object-cover" />
                 </div>
             </div>
 

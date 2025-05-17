@@ -84,7 +84,7 @@ const onAddressClick = async () => {
         <div class="flex h-full flex-1 flex-col gap-4 rounded-xl p-4">
             <div class="flex gap-4 flex-col md:flex-row">
                 <div class="dark:border-sidebar-border relative justify-items-center overflow-hidden">
-                    <img src="@/assets/images/moi.jpg" alt="VC" class="h-65 w-65 rounded-full object-cover" />
+                    <img src="/assets/images/moi.jpg" alt="VC" class="h-65 w-65 rounded-full object-cover" />
                 </div>
                 <div class="border-sidebar-border/70 dark:border-sidebar-border justify-center overflow-hidden rounded-xl border p-4 flex-1">
                     <div class="text-2xl italic">VALÉRIAN CHARRIER</div>
