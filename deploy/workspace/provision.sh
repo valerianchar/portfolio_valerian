@@ -49,6 +49,7 @@ sed -i "s~$(grep -e "DB_DATABASE=" .env)~DB_DATABASE=${DB_DATABASE}~g" .env
 sed -i "s~$(grep -e "DB_USERNAME=" .env)~DB_USERNAME=${DB_USERNAME}~g" .env
 sed -i "s~$(grep -e "DB_PASSWORD=" .env)~DB_PASSWORD=${DB_PASSWORD}~g" .env
 
+php artisan key:generate
 php artisan clear-compiled
 php artisan view:cache
 php artisan route:cache
