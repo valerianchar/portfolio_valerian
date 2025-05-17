@@ -37,8 +37,38 @@ ls -lash
 chmod -R 777 /var/www/storage
 chown -R 1000:1000 /var/www/storage
 
-sed -i "s~$(grep -e "APP_URL=" .env)~APP_URL=${APP_URL}~g" .env
-sed -i "s~$(grep -e "ASSET_URL=" .env)~ASSET_URL=${ASSET_URL}~g" .env
+# Créer .env si pas présent
+[ ! -f .env ] && cp .env.example .env
+
+echo "🔧 Synchronisation des variables d'environnement avec .env"
+
+# Liste des variables à synchroniser
+VARS=(
+  APP_NAME
+  APP_ENV
+  APP_KEY
+  APP_DEBUG
+  APP_URL
+  ASSET_URL
+  APP_DOMAIN
+  DB_CONNECTION
+  DB_HOST
+  DB_PORT
+  DB_DATABASE
+  DB_USERNAME
+  DB_PASSWORD
+  LOG_CHANNEL
+)
+
+for VAR in "${VARS[@]}"; do
+  VALUE=$(printenv "$VAR")
+  if grep -q "^$VAR=" .env; then
+    sed -i "s|^$VAR=.*|$VAR=$VALUE|" .env
+  else
+    echo "$VAR=$VALUE" >> .env
+  fi
+done
+
 
 php artisan clear-compiled
 php artisan view:cache
