@@ -37,40 +37,17 @@ ls -lash
 chmod -R 777 /var/www/storage
 chown -R 1000:1000 /var/www/storage
 
-# Créer .env si pas présent
-[ ! -f .env ] && cp .env.example .env
+sed -i "s~$(grep -e "APP_DEBUG=" .env)~APP_DEBUG=${APP_DEBUG}~g" .env
+sed -i "s~$(grep -e "APP_URL=" .env)~APP_URL=${APP_URL}~g" .env
 
-echo "🔧 Synchronisation des variables d'environnement avec .env"
+sed -i "s~$(grep -e "ASSET_URL=" .env)~ASSET_URL=${ASSET_URL}~g" .env
 
-# Liste des variables à synchroniser
-VARS=(
-  APP_NAME
-  APP_ENV
-  APP_KEY
-  APP_DEBUG
-  APP_URL
-  ASSET_URL
-  APP_DOMAIN
-  DB_CONNECTION
-  DB_HOST
-  DB_PORT
-  DB_DATABASE
-  DB_USERNAME
-  DB_PASSWORD
-  LOG_CHANNEL
-)
-
-for VAR in "${VARS[@]}"; do
-  VALUE=$(printenv "$VAR")
-  if [ -n "$VALUE" ]; then
-    if grep -q "^$VAR=" .env; then
-      sed -i "s|^$VAR=.*|$VAR=$VALUE|" .env
-    else
-      echo "$VAR=$VALUE" >> .env
-    fi
-  fi
-done
-
+sed -i "s~$(grep -e "DB_CONNECTION=" .env)~DB_CONNECTION=${DB_CONNECTION}~g" .env
+sed -i "s~$(grep -e "DB_HOST=" .env)~DB_HOST=${DB_HOST}~g" .env
+sed -i "s~$(grep -e "DB_PORT=" .env)~DB_PORT=${DB_PORT}~g" .env
+sed -i "s~$(grep -e "DB_DATABASE=" .env)~DB_DATABASE=${DB_DATABASE}~g" .env
+sed -i "s~$(grep -e "DB_USERNAME=" .env)~DB_USERNAME=${DB_USERNAME}~g" .env
+sed -i "s~$(grep -e "DB_PASSWORD=" .env)~DB_PASSWORD=${DB_PASSWORD}~g" .env
 
 php artisan clear-compiled
 php artisan view:cache
