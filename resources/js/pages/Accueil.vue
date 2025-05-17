@@ -23,7 +23,6 @@ onMounted(async () => {
         const resOrg = await fetch('https://api.github.com/orgs/VTTRACING-Solutions/repos');
         const orgData = await resOrg.json();
         orgRepos.value = orgData.sort((a, b) => new Date(b.updated_at).getTime() - new Date(a.updated_at).getTime());
-        console.log(orgRepos.value);
     } catch (err) {
         console.error('Erreur de récupération GitHub:', err);
     }
@@ -47,7 +46,7 @@ onMounted(async () => {
                     <div class="mt-4 flex gap-3">
                         <a
                             download
-                            href="/CV/CV_Valerian_charrier.pdf"
+                            href="/assets/CV/CV_Valerian_charrier.pdf"
                             class="rounded-xl bg-white px-4 py-2 font-medium text-black transition hover:bg-gray-200"
                             >📄 Télécharger mon CV</a
                         >
