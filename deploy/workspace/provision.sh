@@ -62,10 +62,12 @@ VARS=(
 
 for VAR in "${VARS[@]}"; do
   VALUE=$(printenv "$VAR")
-  if grep -q "^$VAR=" .env; then
-    sed -i "s|^$VAR=.*|$VAR=$VALUE|" .env
-  else
-    echo "$VAR=$VALUE" >> .env
+  if [ -n "$VALUE" ]; then
+    if grep -q "^$VAR=" .env; then
+      sed -i "s|^$VAR=.*|$VAR=$VALUE|" .env
+    else
+      echo "$VAR=$VALUE" >> .env
+    fi
   fi
 done
 
