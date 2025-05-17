@@ -38,6 +38,7 @@ chmod -R 777 /var/www/storage
 chown -R 1000:1000 /var/www/storage
 
 sed -i "s~$(grep -e "APP_URL=" .env)~APP_URL=${APP_URL}~g" .env
+sed -i "s~$(grep -e "ASSET_URL=" .env)~ASSET_URL=${ASSET_URL}~g" .env
 
 php artisan clear-compiled
 php artisan view:cache
