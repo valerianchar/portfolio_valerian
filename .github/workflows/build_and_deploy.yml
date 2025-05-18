@@ -110,19 +110,13 @@ jobs:
               registry.valerianchar.fr/portfolio/nginx:latest \
               registry.valerianchar.fr/portfolio/php-fpm:latest \
               registry.valerianchar.fr/portfolio/php-worker:latest
-              do
-                if docker image inspect "$image" >/dev/null 2>&1; then
-                  echo "Suppression de l'image existante : $image"
-                  docker rmi "$image"
-                else
-                  echo "Image non présente localement : $image"
-                fi
+            do
+              docker image inspect "$image" >/dev/null 2>&1 && docker rmi "$image" || echo "Image non présente localement : $image"
+              echo "Téléchargement de : $image"
+              docker pull "$image"
+            done
 
-                echo "Téléchargement de : $image"
-                docker pull "$image"
-              done
-
-            docker compose up -d --build workspace nginx php-fpm queue-worker
+            docker compose up -d workspace nginx php-fpm queue-worker
 
             echo "Déploiement terminé. Liste des conteneurs actifs :"
             docker ps

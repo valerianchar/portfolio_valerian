@@ -1,6 +1,11 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}"  @class(['dark' => ($appearance ?? 'system') == 'dark'])>
     <head>
+        <title>Portfolio de Valérian Charrier – Développeur Web</title>
+        <meta name="description" content="Découvrez les projets web de Valérian Charrier, développeur full-stack Laravel & Vue.js.">
+        <meta property="og:title" content="Portfolio de Valérian Charrier" />
+        <meta property="og:description" content="Projets, compétences et contact." />
+        <meta name="robots" content="index, follow">
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
