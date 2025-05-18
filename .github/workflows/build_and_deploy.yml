@@ -67,46 +67,63 @@ jobs:
           docker push $NGINX_IMAGE
           docker push $PHP_FPM_IMAGE
 
+  deploy:
+    name: Deploy to VPS
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
 
-#  deploy:
-#    name: Deploy to VPS
-#    runs-on: ubuntu-latest
-#    if: github.ref == 'refs/heads/main'
-#
-#    steps:
-#      - name: Checkout repository
-#        uses: actions/checkout@v4
-#
-#      - name: Add SSH key and known hosts
-#        run: |
-#          mkdir -p ~/.ssh
-#          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
-#          chmod 600 ~/.ssh/id_rsa
-#          ssh-keyscan -H ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts
-#
-#      - name: Deploy to VPS
-#        run: |
-#          ssh -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} << 'EOF'
-#          set -e
-#          echo "Vérification de Docker et Docker Compose..."
-#
-#            if ! command -v docker &> /dev/null; then
-#              echo "Installation de Docker..."
-#              curl -fsSL https://get.docker.com/ | sh
-#              sudo usermod -aG docker $USER
-#            fi
-#
-#            if ! docker compose version &> /dev/null; then
-#              echo "Installation de Docker Compose..."
-#              sudo curl -L "https://github.com/docker/compose/releases/latest/download/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
-#              sudo chmod +x /usr/local/bin/docker-compose
-#            fi
-#
-#            echo "Mise à jour et redémarrage du conteneur Laravel..."
-#            cd /home/ubuntu/Beekeeper
-#            docker compose pull
-#            docker compose up -d --force-recreate beekeeper-api queue-worker nginx-api redis
-#
-#            echo "Déploiement terminé. Liste des conteneurs actifs :"
-#            docker ps
-#            EOF
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Add SSH key and known hosts
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan -H ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts
+
+      - name: Deploy to VPS
+        run: |
+          ssh -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} << 'EOF'
+          set -e
+          echo "Vérification de Docker et Docker Compose..."
+
+            if ! command -v docker &> /dev/null; then
+              echo "Installation de Docker..."
+              curl -fsSL https://get.docker.com/ | sh
+              sudo usermod -aG docker $USER
+            fi
+
+            if ! docker compose version &> /dev/null; then
+              echo "Installation de Docker Compose..."
+              sudo curl -L "https://github.com/docker/compose/releases/latest/download/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+              sudo chmod +x /usr/local/bin/docker-compose
+            fi
+
+            echo "Mise à jour et redémarrage du conteneur Laravel..."
+            cd /home/ubuntu/Portfolio_valerian
+            docker compose down workspace nginx php-fpm queue-worker
+
+            for image in \
+              registry.valerianchar.fr/portfolio/workspace:latest \
+              registry.valerianchar.fr/portfolio/nginx:latest \
+              registry.valerianchar.fr/portfolio/php-fpm:latest \
+              registry.valerianchar.fr/portfolio/php-worker:latest
+              do
+                if docker image inspect "$image" >/dev/null 2>&1; then
+                  echo "Suppression de l'image existante : $image"
+                  docker rmi "$image"
+                else
+                  echo "Image non présente localement : $image"
+                fi
+
+                echo "Téléchargement de : $image"
+                docker pull "$image"
+              done
+
+            docker compose up -d --build workspace nginx php-fpm queue-worker
+
+            echo "Déploiement terminé. Liste des conteneurs actifs :"
+            docker ps
+            EOF

@@ -12,7 +12,7 @@ const copiedAddress = ref(false);
 const breadcrumbs: BreadcrumbItem[] = [
     {
         title: 'CV',
-        href: '/cursus-vitae',
+        href: '/curriculum-vitae',
     },
 ];
 

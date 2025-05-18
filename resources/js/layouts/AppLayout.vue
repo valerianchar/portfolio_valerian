@@ -19,7 +19,7 @@ const mainNavItems: NavItem[] = [
     },
     {
         title: 'CV',
-        href: '/cursus-vitae',
+        href: '/curriculum-vitae',
         icon: FileUser,
     },
 ];
