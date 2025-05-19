@@ -61,7 +61,7 @@ onMounted(async () => {
                 <!-- Bloc image ou illustration -->
                 <div class="flex items-center justify-center">
                     <!-- Tu peux remplacer l'image ci-dessous -->
-                    <img src="/assets/images/moi.jpg" alt="Photo de Valérian" class="w-full rounded-full object-cover" />
+                    <img src="/assets/images/moi.jpg" alt="Photo de Valérian" class="w-full rounded-full object-cover max-h-135" />
                 </div>
             </div>
 
@@ -80,7 +80,7 @@ onMounted(async () => {
                 </div>
             </div>
             <!-- Placeholder pour le reste (tu peux ensuite intégrer une section Projets ici) -->
-            <div class="border-sidebar-border/70 dark:border-sidebar-border relative min-h-[60vh] flex-1 rounded-xl border p-6 md:min-h-min">
+            <div class="border-sidebar-border/70 dark:border-sidebar-border relative min-h-[180vh] flex-1 rounded-xl border p-6 md:min-h-min">
                 <h2 id="projets" class="mb-4 text-2xl font-semibold text-white">Mes Projets</h2>
                 <p class="text-gray-400">Retrouvez ici une sélection de projets personnels et professionnels réalisés pendant mes cours.</p>
                 <div class="grid gap-4 md:grid-cols-2">
