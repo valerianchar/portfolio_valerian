@@ -16,7 +16,7 @@ jobs:
     env:
       REGISTRY: registry.valeriancharrier.fr
       REGISTRY_USER: admin
-      CURRENT_VERSION: latest 
+      CURRENT_VERSION: latest
 
     steps:
       - name: Checkout repository
@@ -32,7 +32,7 @@ jobs:
 
       - name: Compute Variables
         run: |
-          LARADOCK_HASH=bd6d2795
+          LARADOCK_HASH=2a37bf4b
           LARADOCK_HASH=${LARADOCK_HASH:0:8}
           echo "LARADOCK_HASH=$LARADOCK_HASH" >> $GITHUB_ENV
 
