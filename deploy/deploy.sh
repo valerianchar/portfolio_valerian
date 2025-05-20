@@ -24,10 +24,10 @@ cd /home/ubuntu/Portfolio_valerian
 docker compose down workspace nginx php-fpm queue-worker
 
 for image in \
-  registry.valerianchar.fr/portfolio/workspace:latest \
-  registry.valerianchar.fr/portfolio/nginx:latest \
-  registry.valerianchar.fr/portfolio/php-fpm:latest \
-  registry.valerianchar.fr/portfolio/php-worker:latest
+  registry.valeriancharrier.fr/portfolio/workspace:latest \
+  registry.valeriancharrier.fr/portfolio/nginx:latest \
+  registry.valeriancharrier.fr/portfolio/php-fpm:latest \
+  registry.valeriancharrier.fr/portfolio/php-worker:latest
 do
   docker image inspect "$image" >/dev/null 2>&1 && docker rmi "$image" || echo "Image non présente localement : $image"
   echo "Téléchargement de : $image"
