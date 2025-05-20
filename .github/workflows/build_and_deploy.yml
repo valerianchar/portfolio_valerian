@@ -16,7 +16,7 @@ jobs:
     env:
       REGISTRY: registry.valeriancharrier.fr
       REGISTRY_USER: admin
-      CURRENT_VERSION: latest
+      CURRENT_VERSION: latest 
 
     steps:
       - name: Checkout repository
