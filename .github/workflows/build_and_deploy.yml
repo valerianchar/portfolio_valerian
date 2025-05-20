@@ -14,7 +14,7 @@ jobs:
     if: github.ref == 'refs/heads/main'
 
     env:
-      REGISTRY: registry.valerianchar.fr
+      REGISTRY: registry.valeriancharrier.fr
       REGISTRY_USER: admin
       CURRENT_VERSION: latest
 
