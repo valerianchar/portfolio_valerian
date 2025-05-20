@@ -175,7 +175,7 @@ const onAddressClick = async () => {
                                 <Diamond class="h-4 w-4" />
                             </div>
                             <div class="flex flex-col gap-4">
-                                <div class="text-xl font-bold">EXPÉRIENCE PROFESSIONNELLE</div>
+                                <div class="text-xl font-bold">EXPÉRIENCES PROFESSIONNELLE</div>
                                 <div class="flex flex-col gap-3">
                                     <div class="flex flex-col gap-1">
                                         <div class="font-bold">Développeur Full Stack</div>
